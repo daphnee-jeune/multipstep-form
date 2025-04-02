@@ -1,44 +1,15 @@
-import { useReducer } from "react";
 import { useNavigate } from "react-router-dom";
-
-interface FormData {
-  personalInfo: {
-    firstName: string;
-    lastName: string;
-    email: string;
-  };
-}
-
-interface FormAction {
-  type: "UPDATE_PERSONAL_INFO";
-  payload: Partial<FormData["personalInfo"]>;
-}
-const initialPeronalInfoState: FormData["personalInfo"] = {
-  firstName: "",
-  lastName: "",
-  email: "",
-};
+import { useFormContext } from "../context/FormContext";
 
 const PersonalInfoPage = () => {
-  const [state, dispatch] = useReducer(
-    personalInfoReducer,
-    initialPeronalInfoState
-    );
-    const navigate = useNavigate();
-
-  function personalInfoReducer(
-    state = initialPeronalInfoState,
-    action: FormAction
-  ) {
-    return {
-      ...state,
-      ...action.payload,
-    };
-  }
+  const { state, dispatch } = useFormContext();
+  
+  const navigate = useNavigate();
   const handleNextPage = (e: React.FormEvent) => {
     e.preventDefault();
     navigate("/address");
   };
+
   return (
     <form className="flex flex-col gap-8" onSubmit={handleNextPage}>
       <h1 className="text-xl">Personal information</h1>
@@ -49,7 +20,7 @@ const PersonalInfoPage = () => {
           id="firstname"
           required
           className="border-l border-[#dfe5f6] focus:bg-gray-200 outline-none p-2 focus:rounded-sm focus:text-[#2A004E] text-black"
-          value={state.firstName}
+          value={state.personalInfo.firstName}
           onChange={(e) =>
             dispatch({
               type: "UPDATE_PERSONAL_INFO",
@@ -65,7 +36,7 @@ const PersonalInfoPage = () => {
           id="lastname"
           required
           className="border-l border-[#dfe5f6] focus:bg-gray-200 outline-none p-2 focus:rounded-sm focus:text-[#2A004E] text-black"
-          value={state.lastName}
+          value={state.personalInfo.lastName}
           onChange={(e) =>
             dispatch({
               type: "UPDATE_PERSONAL_INFO",
@@ -81,7 +52,7 @@ const PersonalInfoPage = () => {
           id="email"
           required
           className="border-l border-[#dfe5f6] focus:bg-gray-200 outline-none p-2 focus:rounded-sm focus:text-[#2A004E] text-black"
-          value={state.email}
+          value={state.personalInfo.email}
           onChange={(e) =>
             dispatch({
               type: "UPDATE_PERSONAL_INFO",

@@ -1,9 +1,8 @@
-import { useContext, useReducer } from "react";
-import { createContext } from "react";
+import { createContext, useContext, useReducer } from "react";
 import { FormAction, FormData } from "../types";
 import { formReducer, initialFormState } from "../reducers/formReduce";
 
-type FormContextType = {
+interface FormContextType {
   state: FormData;
   dispatch: React.Dispatch<FormAction>;
 };

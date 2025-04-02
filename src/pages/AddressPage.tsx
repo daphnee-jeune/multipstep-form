@@ -1,39 +1,10 @@
-import { useReducer } from "react";
 import { useNavigate } from "react-router-dom";
-
-interface FormData {
-  addressInfo: {
-    street: string;
-    city: string;
-    zip: string;
-  };
-}
-
-interface FormAction {
-  type: "UPDATE_ADDRESS_INFO";
-  payload: Partial<FormData["addressInfo"]>;
-}
-const initialAddressInfoState: FormData["addressInfo"] = {
-  street: "",
-  city: "",
-  zip: "",
-};
+import { useFormContext } from "../context/FormContext";
 
 const AddressPage = () => {
-  const [state, dispatch] = useReducer(
-    addressInfoReducer,
-    initialAddressInfoState
-  );
+  const { state, dispatch } = useFormContext();
+
   const navigate = useNavigate();
-  function addressInfoReducer(
-    state = initialAddressInfoState,
-    action: FormAction
-  ) {
-    return {
-      ...state,
-      ...action.payload,
-    };
-  }
   const handleNextPage = (e: React.FormEvent) => {
     e.preventDefault();
     navigate("/preferences");
@@ -48,7 +19,7 @@ const AddressPage = () => {
           id="street"
           required
           className="border-l border-[#dfe5f6] focus:bg-gray-200 outline-none p-2 focus:rounded-sm focus:text-[#2A004E] text-black"
-          value={state.street}
+          value={state.addressInfo.street}
           onChange={(e) =>
             dispatch({
               type: "UPDATE_ADDRESS_INFO",
@@ -64,7 +35,7 @@ const AddressPage = () => {
           id="city"
           required
           className="border-l border-[#dfe5f6] focus:bg-gray-200 outline-none p-2 focus:rounded-sm focus:text-[#2A004E] text-black"
-          value={state.city}
+          value={state.addressInfo.city}
           onChange={(e) =>
             dispatch({
               type: "UPDATE_ADDRESS_INFO",
@@ -80,7 +51,7 @@ const AddressPage = () => {
           id="zip"
           required
           className="border-l border-[#dfe5f6] focus:bg-gray-200 outline-none p-2 focus:rounded-sm focus:text-[#2A004E] text-black"
-          value={state.zip}
+          value={state.addressInfo.zip}
           onChange={(e) =>
             dispatch({
               type: "UPDATE_ADDRESS_INFO",
