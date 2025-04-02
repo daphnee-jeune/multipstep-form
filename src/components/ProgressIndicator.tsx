@@ -2,7 +2,7 @@
 const ProgressIndicator = () => {
   return (
     <div>
-      
+      Progress
     </div>
   )
 }
