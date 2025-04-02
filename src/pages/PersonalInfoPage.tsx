@@ -1,4 +1,5 @@
 import { useReducer } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface FormData {
   personalInfo: {
@@ -18,6 +19,7 @@ const initialPeronalInfoState: FormData["personalInfo"] = {
   email: "",
 };
 
+const navigate = useNavigate();
 const PersonalInfoPage = () => {
   const [state, dispatch] = useReducer(
     personalInfoReducer,
@@ -30,12 +32,15 @@ const PersonalInfoPage = () => {
   ) {
     return {
       ...state,
-      ...action.payload
-    }
+      ...action.payload,
+    };
   }
-
+  const handleNextPage = (e: React.FormEvent) => {
+    e.preventDefault();
+    navigate("/address");
+  };
   return (
-    <form className="flex flex-col gap-8">
+    <form className="flex flex-col gap-8" onSubmit={handleNextPage}>
       <h1 className="text-xl">Personal information</h1>
       <div className="flex flex-col gap-y-2">
         <label htmlFor="firstname">First Name</label>
