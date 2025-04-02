@@ -19,12 +19,12 @@ const initialPeronalInfoState: FormData["personalInfo"] = {
   email: "",
 };
 
-const navigate = useNavigate();
 const PersonalInfoPage = () => {
   const [state, dispatch] = useReducer(
     personalInfoReducer,
     initialPeronalInfoState
-  );
+    );
+    const navigate = useNavigate();
 
   function personalInfoReducer(
     state = initialPeronalInfoState,
