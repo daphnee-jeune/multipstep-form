@@ -1,4 +1,39 @@
+import { useReducer } from "react";
+
+interface FormData {
+  personalInfo: {
+    firstName: string;
+    lastName: string;
+    email: string;
+  };
+}
+
+interface FormAction {
+  type: "UPDATE_PERSONAL_INFO";
+  payload: Partial<FormData["personalInfo"]>;
+}
+const initialPeronalInfoState: FormData["personalInfo"] = {
+  firstName: "",
+  lastName: "",
+  email: "",
+};
+
 const PersonalInfoPage = () => {
+  const [state, dispatch] = useReducer(
+    personalInfoReducer,
+    initialPeronalInfoState
+  );
+
+  function personalInfoReducer(
+    state = initialPeronalInfoState,
+    action: FormAction
+  ) {
+    return {
+      ...state,
+      ...action.payload
+    }
+  }
+
   return (
     <form className="flex flex-col gap-8">
       <h1 className="text-xl">Personal information</h1>
@@ -9,6 +44,13 @@ const PersonalInfoPage = () => {
           id="firstname"
           required
           className="border-l border-[#dfe5f6] focus:bg-gray-200 outline-none p-2 focus:rounded-sm focus:text-[#2A004E] text-black"
+          value={state.firstName}
+          onChange={(e) =>
+            dispatch({
+              type: "UPDATE_PERSONAL_INFO",
+              payload: { firstName: e.target.value },
+            })
+          }
         />
       </div>
       <div className="flex flex-col gap-y-2">
@@ -18,6 +60,13 @@ const PersonalInfoPage = () => {
           id="lastname"
           required
           className="border-l border-[#dfe5f6] focus:bg-gray-200 outline-none p-2 focus:rounded-sm focus:text-[#2A004E] text-black"
+          value={state.lastName}
+          onChange={(e) =>
+            dispatch({
+              type: "UPDATE_PERSONAL_INFO",
+              payload: { lastName: e.target.value },
+            })
+          }
         />
       </div>
       <div className="flex flex-col gap-y-2">
@@ -27,6 +76,13 @@ const PersonalInfoPage = () => {
           id="email"
           required
           className="border-l border-[#dfe5f6] focus:bg-gray-200 outline-none p-2 focus:rounded-sm focus:text-[#2A004E] text-black"
+          value={state.email}
+          onChange={(e) =>
+            dispatch({
+              type: "UPDATE_PERSONAL_INFO",
+              payload: { email: e.target.value },
+            })
+          }
         />
       </div>
       <button
