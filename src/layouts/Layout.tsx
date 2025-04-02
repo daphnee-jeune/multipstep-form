@@ -6,7 +6,6 @@ const Layout = () => {
     <main className="p-6 space-y-12 max-w-3xl mx-auto">
       <ProgressIndicator />
       <Outlet />
-      HELLO
     </main>
   );
 };
